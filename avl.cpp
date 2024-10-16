@@ -1,5 +1,6 @@
 #include "avl.h"
 
+
 static uint32_t avl_depth(AVLNode *node) {
     return node ? node->depth : 0;
 }
