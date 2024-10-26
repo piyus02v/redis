@@ -15,3 +15,14 @@ A simple Redis-like key-value store built in C/C++, created to explore how in-me
    ```bash
    git clone https://github.com/piyus02v/redis.git
    
+## Example Commands
+
+- `SET key value` – Stores a key-value pair.
+- `GET key` – Retrieves the value of a key.
+- `DEL key` – Deletes a key.
+- `INCR key` – Increments the integer value of a key.
+- `HSET hash field value` – Sets a field in a hash.
+
+## Contributing
+
+If you're interested in improving or learning more about Redis internals, feel free to open issues or submit pull requests!
