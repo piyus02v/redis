@@ -1,4 +1,4 @@
-# Redis Clone in C/C++
+# Redis in C/C++
 
 A simple Redis-like key-value store built in C/C++, created to explore how in-memory databases work under the hood.
 
