@@ -4,10 +4,22 @@ A simple Redis-like key-value store built in C/C++, created to explore how in-me
 
 ## Key Features
 
-- **Data Structures**: Implements Redis core data structures like strings, lists, hash maps, and sets.
-- **Event Loop**: A basic single-threaded event loop to handle client requests in real-time.
-- **Persistence**: In-memory data store with basic save functionality for persistence.
+- **Data Structures**: Implements core Redis data structures like strings, lists, hash maps, and sets.
+- **Event Loop**: A single-threaded event loop to handle multiple client requests in real-time.
+- **Persistence**: An in-memory data store with basic save functionality for persistence.
+- **Socket Programming**: Uses socket programming to manage client-server communication, enabling data exchange over TCP/IP.
 - **Multithreading**: Allows handling of multiple clients for concurrent connections.
+
+## Socket Programming Overview
+
+This project uses **sockets** to enable network communication between clients and the server. Here’s a quick rundown of how it works:
+
+- **Server Socket Setup**: The server creates a socket, binds it to a specified port, and listens for incoming client connections.
+- **Client Connections**: Each client connects to the server’s IP address and port, establishing a communication link.
+- **Data Exchange**: The server processes requests received via sockets, interprets commands, and sends responses back to the client.
+
+This setup enables multiple clients to connect to the server simultaneously and interact with the data store through Redis-like commands.
+
 
 ## Getting Started
 
