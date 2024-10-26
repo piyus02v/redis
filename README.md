@@ -26,6 +26,12 @@ This setup enables multiple clients to connect to the server simultaneously and 
 1. Clone and navigate to the project:
    ```bash
    git clone https://github.com/piyus02v/redis.git
+2. Compile the code
+   ```bash
+   make
+3. Run the server
+   ```bash
+   ./redis-server
    
 ## Example Commands
 
