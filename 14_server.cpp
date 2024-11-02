@@ -76,7 +76,7 @@ const size_t k_max_msg = 4096;
 enum {
     STATE_REQ = 0,
     STATE_RES = 1,
-    STATE_END = 2,  // mark the connection for deletion
+    STATE_END = 2,  // connection for deletion
 };
 
 struct Conn {
@@ -108,12 +108,12 @@ static int32_t accept_new_conn(int fd) {
     int connfd = accept(fd, (struct sockaddr *)&client_addr, &socklen);
     if (connfd < 0) {
         msg("accept() error");
-        return -1;  // error
+        return -1;  // error 
     }
 
-    // set the new connection fd to nonblocking mode
+    // seting new connection fd to nonblocking mode
     fd_set_nb(connfd);
-    // creating the struct Conn
+    // create struct Conn
     struct Conn *conn = (struct Conn *)malloc(sizeof(struct Conn));
     if (!conn) {
         close(connfd);
@@ -172,7 +172,7 @@ enum {
     T_ZSET = 1,
 };
 
-// the structure for the key
+// structure for the key
 struct Entry {
     struct HNode node;
     std::string key;
@@ -288,7 +288,7 @@ static void do_set(std::vector<std::string> &cmd, std::string &out) {
 // set or remove the TTL
 static void entry_set_ttl(Entry *ent, int64_t ttl_ms) {
     if (ttl_ms < 0 && ent->heap_idx != (size_t)-1) {
-        // erase an item from the heap
+        // erased an item from the heap
         // by replacing it with the last item in the array.
         size_t pos = ent->heap_idx;
         g_data.heap[pos] = g_data.heap.back();
@@ -300,7 +300,7 @@ static void entry_set_ttl(Entry *ent, int64_t ttl_ms) {
     } else if (ttl_ms >= 0) {
         size_t pos = ent->heap_idx;
         if (pos == (size_t)-1) {
-            // add an new item to the heap
+            // added an new item to the heap
             HeapItem item;
             item.ref = &ent->heap_idx;
             g_data.heap.push_back(item);
@@ -355,7 +355,7 @@ static void do_ttl(std::vector<std::string> &cmd, std::string &out) {
     return out_int(out, expire_at > now_us ? (expire_at - now_us) / 1000 : 0);
 }
 
-// deallocate the key immediately
+// deallocated the key immediately
 static void entry_destroy(Entry *ent) {
     switch (ent->type) {
     case T_ZSET:
@@ -370,7 +370,7 @@ static void entry_del_async(void *arg) {
     entry_destroy((Entry *)arg);
 }
 
-// dispose the entry after it got detached from the key space
+// disposing the entry after it got detached from the key space
 static void entry_del(Entry *ent) {
     entry_set_ttl(ent, -1);
 

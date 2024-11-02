@@ -8,7 +8,7 @@
 
 static ZNode *znode_new(const char *name, size_t len, double score) {
     ZNode *node = (ZNode *)malloc(sizeof(ZNode) + len);
-    assert(node);   // not a good idea in real projects
+    assert(node);   
     avl_init(&node->tree);
     node->hmap.next = NULL;
     node->hmap.hcode = str_hash((uint8_t *)name, len);
@@ -22,7 +22,7 @@ static uint32_t min(size_t lhs, size_t rhs) {
     return lhs < rhs ? lhs : rhs;
 }
 
-// compare by the (score, name) tuple
+// comparison by the (score, name) tuple
 static bool zless(
     AVLNode *lhs, double score, const char *name, size_t len)
 {
@@ -42,20 +42,20 @@ static bool zless(AVLNode *lhs, AVLNode *rhs) {
     return zless(lhs, zr->score, zr->name, zr->len);
 }
 
-// insert into the AVL tree
+// insertion into the AVL tree
 static void tree_add(ZSet *zset, ZNode *node) {
     AVLNode *cur = NULL;            // current node
-    AVLNode **from = &zset->tree;   // the incoming pointer to the next node
-    while (*from) {                 // tree search
+    AVLNode **from = &zset->tree;   // incoming pointer to the next node
+    while (*from) {                 // tree searcheri
         cur = *from;
         from = zless(&node->tree, cur) ? &cur->left : &cur->right;
     }
-    *from = &node->tree;            // attach the new node
+    *from = &node->tree;            // attached the new node
     node->tree.parent = cur;
     zset->tree = avl_fix(&node->tree);
 }
 
-// update the score of an existing node (AVL tree reinsertion)
+// updated the score of an existing node (AVL tree reinsertion)
 static void zset_update(ZSet *zset, ZNode *node, double score) {
     if (node->score == score) {
         return;
@@ -66,7 +66,7 @@ static void zset_update(ZSet *zset, ZNode *node, double score) {
     tree_add(zset, node);
 }
 
-// add a new (score, name) tuple, or update the score of the existing tuple
+// adding a new (score, name) tuple, or update the score of the existing tuple
 bool zset_add(ZSet *zset, const char *name, size_t len, double score) {
     ZNode *node = zset_lookup(zset, name, len);
     if (node) {
@@ -80,7 +80,7 @@ bool zset_add(ZSet *zset, const char *name, size_t len, double score) {
     }
 }
 
-// a helper structure for the hashtable lookup
+//helper structure for the hashtable lookup
 struct HKey {
     HNode node;
     const char *name = NULL;
