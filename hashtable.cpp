@@ -20,10 +20,7 @@ static void h_insert(HTab *htab, HNode *node) {
     htab->size++;
 }
 
-// hashtable look up subroutine.
-// Pay attention to the return value. It returns the address of
-// the parent pointer that owns the target node,
-// which can be used to delete the target node.
+
 static HNode **h_lookup(HTab *htab, HNode *key, bool (*eq)(HNode *, HNode *)) {
     if (!htab->tab) {
         return NULL;
@@ -39,7 +36,7 @@ static HNode **h_lookup(HTab *htab, HNode *key, bool (*eq)(HNode *, HNode *)) {
     return NULL;
 }
 
-// remove a node from the chain
+// removed a node from the chain
 static HNode *h_detach(HTab *htab, HNode **from) {
     HNode *node = *from;
     *from = node->next;
@@ -52,7 +49,7 @@ const size_t k_resizing_work = 128; // constant work
 static void hm_help_resizing(HMap *hmap) {
     size_t nwork = 0;
     while (nwork < k_resizing_work && hmap->ht2.size > 0) {
-        // scan for nodes from ht2 and move them to ht1
+        // scannning for nodes from ht2 and move them to ht1
         HNode **from = &hmap->ht2.tab[hmap->resizing_pos];
         if (!*from) {
             hmap->resizing_pos++;
@@ -72,7 +69,7 @@ static void hm_help_resizing(HMap *hmap) {
 
 static void hm_start_resizing(HMap *hmap) {
     assert(hmap->ht2.tab == NULL);
-    // create a bigger hashtable and swap them
+    // created a bigger hashtable and swapping hogyi
     hmap->ht2 = hmap->ht1;
     h_init(&hmap->ht1, (hmap->ht1.mask + 1) * 2);
     hmap->resizing_pos = 0;
@@ -94,7 +91,7 @@ void hm_insert(HMap *hmap, HNode *node) {
     h_insert(&hmap->ht1, node);
 
     if (!hmap->ht2.tab) {
-        // check whether we need to resize
+        // check whether i need to resize
         size_t load_factor = hmap->ht1.size / (hmap->ht1.mask + 1);
         if (load_factor >= k_max_load_factor) {
             hm_start_resizing(hmap);
